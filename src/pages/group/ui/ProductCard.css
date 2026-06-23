@@ -1,0 +1,6 @@
+.strike-price {
+    text-decoration: line-through;
+    text-decoration-color: brown;
+    text-decoration-thickness: 2px;
+    font-size: small;
+}

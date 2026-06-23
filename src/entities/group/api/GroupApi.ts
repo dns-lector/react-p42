@@ -80,7 +80,6 @@ const groups:Array<IGroup> = [
         imageUrl: "/img/group11.jpg"
     }
 ];
-
 const groupProducts:Record<string,IGroupProduct> = {
     "game": {
         group: groups[0],
@@ -91,6 +90,46 @@ const groupProducts:Record<string,IGroupProduct> = {
             {id: "1-2", name: "Goat Simulator", // description: "Fortnite: Battle Royale",
             price: 49.99, imageUrl: "/img/Gemini_Generated_Image_Goat_Simulator_3.png", 
             actionPrice: 29.99, stock: -1 },
+        ]
+    },
+    "watches": {
+        group: groups[2],
+        products: [
+            {
+                id: "3-1",
+                name: "Smart Watches for Women",
+                description: '1.91" HD Fitness Tracker (Answer/Make Calls), IP68 Waterproof, 120+ Sport Modes with Heart Rate and Sleep Monitor, Fitness Watch for iPhone/Android',
+                price: 129.99,
+                imageUrl: "/img/81al6p-pKuL._AC_UY218_.jpg",                
+            },
+            {
+                id: "3-2",
+                name: "SAMSUNG Galaxy FIT 3 [2024]",
+                description: '1.6" AMOLED Display | 14 Days Battery Life | 100+ Watchfaces | 100+ Exercise Modes | International Model - (Gray)',
+                price: 45,
+                imageUrl: "/img/41KyLKvro-L._AC_UY218_.jpg",                
+            },
+            {
+                id: "3-3",
+                name: "Samsung Galaxy Watch 8 (2025)",
+                description: '40mm Bluetooth Smartwatch, Cushion Design, Fitness Tracker, Sleep Coaching, Running Coach, Energy Score, Heart Rate Tracking, Graphite [US Version, 2 Yr Warranty]',
+                price: 223.01,
+                imageUrl: "/img/61IpkAmVjwL._AC_UY218_.jpg",                
+            },
+            {
+                id: "3-4",
+                name: "Garmin vívoactive 5",
+                description: 'Health and Fitness GPS Smartwatch, AMOLED Display, Up to 11 Days of Battery, Ivory',
+                price: 169.95,
+                imageUrl: "/img/610Jl4dUB7L._AC_UY218_.jpg",                
+            },
+            {
+                id: "3-5",
+                name: "Smart Watch for Men Women",
+                description: '1.91"Smartwatch with Answer/Make Call, Fitness Tracker with 100+ Sport Modes, Watches IP68 Waterproof/Heart Rate/Sleep Monitor/Pedometer, Activity Tracker for Android iOS',
+                price: 13.99,
+                imageUrl: "/img/71y74-RugbL._AC_UY218_.jpg",                
+            },
         ]
     }
 }
