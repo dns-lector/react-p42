@@ -81,6 +81,20 @@ const groups:Array<IGroup> = [
     }
 ];
 
+const groupProducts:Record<string,IGroupProduct> = {
+    "game": {
+        group: groups[0],
+        products: [
+            {id: "1-1", name: "Fortnite", description: "Fortnite: Battle Royale",
+            price: 1.0, imageUrl: "/img/Gemini_Generated_Image_Fortnite.png", 
+            stock: -1, slug: "fortnite"},
+            {id: "1-2", name: "Goat Simulator", // description: "Fortnite: Battle Royale",
+            price: 49.99, imageUrl: "/img/Gemini_Generated_Image_Goat_Simulator_3.png", 
+            actionPrice: 29.99, stock: -1 },
+        ]
+    }
+}
+
 export default class GroupApi {
 
     static allGroups(): Promise<Array<IGroup>> {
@@ -100,7 +114,9 @@ export default class GroupApi {
                     if(group) {
                         resolve({
                             group,
-                            products: []
+                            products: typeof groupProducts[slug] == 'undefined'
+                            ? [] 
+                            : groupProducts[slug].products,
                         });
                     }
                     else {
