@@ -1,5 +1,15 @@
 .groups-container {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 15px;
+}
+.groups-container div {
+    text-align: center;
+}
+.groups-container img {
+    width: 144px;
+}
+.groups-crop {
+    width: 100%;
+    overflow: hidden;
 }

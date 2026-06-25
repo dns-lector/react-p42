@@ -11,8 +11,13 @@ export default function GroupsWidget() {
     }, []);
 
     return <div>
-        <div className='groups-container'>
-            {groups.map(g => <div>{g.name}</div>)}
+        <div className='groups-crop'>
+            <div className='groups-container'>
+                {groups.map(g => <div key={g.id}>
+                    <img src={g.imageUrl} alt={g.name} />
+                    {g.name}
+                </div>)}
+            </div>
         </div>
     </div>;
 }
