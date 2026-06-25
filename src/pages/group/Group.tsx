@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type IGroupProduct from '../../entities/group/model/IGroupProduct';
 import GroupApi from '../../entities/group/api/GroupApi';
 import ProductCard from './ui/ProductCard';
+import GroupsWidget from '../../widgets/groups/GroupsWidget';
 
 export default function Group() {
     const {slug} = useParams();
@@ -16,7 +17,10 @@ export default function Group() {
     return <div className='container'>
         <h1>{slug}</h1>
         {groupProduct
-        ?<GroupView groupProduct={groupProduct} />
+        ?<>
+            <GroupsWidget />
+            <GroupView groupProduct={groupProduct} />
+        </>
         :<p>Loading...</p>}
     </div>
 }

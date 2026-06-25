@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Counter from "../../widgets/counter/Counter";
 import type IGroup from "../../entities/group/model/IGroup";
 import GroupApi from "../../entities/group/api/GroupApi";
 import { Link } from "react-router-dom";
