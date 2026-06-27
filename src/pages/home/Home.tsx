@@ -7,7 +7,12 @@ export default function Home() {
     const [groups, setGroups] = useState<Array<IGroup>>([]);
 
     useEffect(() => {
+        console.log("Home created");
         GroupApi.allGroups().then(setGroups);
+
+        // хук може повертати дію (лямбду). 
+        // Вона буде виконанна при руйнуванні елементу
+        return () => {console.log("Home destroyed");};
     }, []);
 
     return <div className="container">

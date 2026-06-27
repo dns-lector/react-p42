@@ -1,15 +1,24 @@
+.groups-widget {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+}
 .groups-container {
     display: flex;
     flex-direction: row;
     gap: 15px;
 }
-.groups-container div {
+.groups-container a {
     text-align: center;
+    text-decoration: none;
+    color: #444;
 }
 .groups-container img {
     width: 144px;
 }
 .groups-crop {
-    width: 100%;
+    /* width: 100%; */
+    flex: 1;
     overflow: hidden;
 }

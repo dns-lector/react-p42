@@ -11,8 +11,11 @@ export default function Group() {
     const [groupProduct, setGroupProduct] = useState<IGroupProduct|undefined>();
 
     useEffect(() => {
+        //console.log("Group Effect start");
         GroupApi.groupDetails(slug!).then(setGroupProduct);
-    }, []);
+
+        //return () => {console.log("Group Effect finish")};
+    }, [slug, setGroupProduct]);
 
     return <div className='container'>
         <h1>{slug}</h1>
