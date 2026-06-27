@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import './ui/Layout.css';
+import AppContext from '../../features/_context/AppContext';
 
 export default function Layout() {
+    // вилучаємо дані з контексту застосунку (глобального стану)
+    const {cart} = useContext(AppContext);
+
     return <>    
     <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom">
         <div className="container-fluid">
@@ -15,7 +20,10 @@ export default function Layout() {
                         <Link to="/" className="nav-link"><i className="bi bi-house"></i></Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/group" className="nav-link"><i className="bi bi-cart"></i></Link>
+                        <Link to="/cart" className="nav-link cart-nav">
+                            <span>{cart.length}</span>
+                            <i className="bi bi-cart"></i>
+                        </Link>
                     </li>                
                     <li className="nav-item">
                         <Link to="/no-page" className="nav-link"><i className="bi bi-sign-stop"></i></Link>
