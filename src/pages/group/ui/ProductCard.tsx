@@ -1,8 +1,19 @@
 import { Link } from "react-router-dom";
 import type IProductBrief from "../../../entities/group/model/IProductBrief";
 import './ProductCard.css';
+import { useContext } from "react";
+import AppContext from "../../../features/_context/AppContext";
 // 
 export default function ProductCard({productBrief}:{productBrief:IProductBrief}) {
+    const {cart, setCart} = useContext(AppContext);
+
+    const addToCartClick = () => {
+        setCart([...cart, {
+            product: productBrief,
+            quantity: 1,
+        }]);
+    };
+    
     return <div className="col" >
     <div className="card h-100">
         <Link to={`/group/${productBrief.slug}`} className="nav-link" >
@@ -27,7 +38,7 @@ export default function ProductCard({productBrief}:{productBrief:IProductBrief})
             }
                 
             </div> 
-            <button className="btn btn-outline-success">
+            <button className="btn btn-outline-success" onClick={addToCartClick}>
                 <i className="bi bi-cart"></i>
             </button>
         </div>

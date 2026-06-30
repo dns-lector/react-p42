@@ -7,12 +7,13 @@ import Group from '../../pages/group/Group';
 import NotFound from '../../pages/not_found/NotFound';
 import AppContext from '../../features/_context/AppContext';
 import Cart from "../../pages/cart/Cart";
+import type ICartItem from "../../entities/cart/model/ICartItem";
 
 export default function App() {
-    const [cart, setCart] = useState<Array<string>>([]);
+    const [cart, setCart] = useState<Array<ICartItem>>([]);
 
     return (
-    <AppContext.Provider value={{cart}}>
+    <AppContext.Provider value={{cart, setCart}}>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout />} >
