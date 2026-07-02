@@ -1,3 +1,4 @@
+import '../../shared/extensions/NumberExtensions';
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
