@@ -7,13 +7,20 @@ import Group from '../../pages/group/Group';
 import NotFound from '../../pages/not_found/NotFound';
 import AppContext from '../../features/_context/AppContext';
 import Cart from "../../pages/cart/Cart";
-import type ICartItem from "../../entities/cart/model/ICartItem";
+import type ICart from "../../entities/cart/model/ICart";
+import CartApi from "../../entities/cart/api/CartApi";
 
 export default function App() {
-    const [cart, setCart] = useState<Array<ICartItem>>([]);
+    const [cart, setCart] = useState<ICart>({cartItems: [], price: 0});
+
+    const updateCart = (cart:ICart):void => {
+        // перед зміною стану здійснюємо запит на обчислення знижок по кошику
+        CartApi.calculateCart(cart)
+        .then(setCart);
+    }
 
     return (
-    <AppContext.Provider value={{cart, setCart}}>
+    <AppContext.Provider value={{cart, setCart: updateCart}}>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout />} >

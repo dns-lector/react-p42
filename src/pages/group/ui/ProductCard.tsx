@@ -8,13 +8,17 @@ export default function ProductCard({productBrief}:{productBrief:IProductBrief})
     const {cart, setCart} = useContext(AppContext);
     const navigate = useNavigate();
 
-    const isInCart = Boolean(cart.find(ci => ci.product.id == productBrief.id));
+    const isInCart = Boolean(cart.cartItems.find(ci => ci.product.id == productBrief.id));
 
     const addToCartClick = () => {
-        setCart([...cart, {
-            product: productBrief,
-            quantity: 1,
-        }]);
+        setCart({
+            cartItems: [...cart.cartItems, {
+                product: productBrief,
+                quantity: 1,
+                price: productBrief.price
+            }],
+            price: 0
+        });
     };
 
     

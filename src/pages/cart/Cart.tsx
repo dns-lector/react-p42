@@ -10,9 +10,9 @@ export default function Cart() {
     return <div className='row mx-3'>
         <div className='col col-8'>
             <h1>Shopping Cart</h1>
-            {cart.length == 0 
+            {cart.cartItems.length == 0 
             ? <p>Cart is empty</p>
-            : cart.map(ci => <CartItemView key={ci.product.id} ci={ci} />)}
+            : cart.cartItems.map(ci => <CartItemView key={ci.product.id} ci={ci} />)}
         </div>
         <div className='col col-4 bg-light'>
             <h2>Order summary</h2>
@@ -31,11 +31,11 @@ function CartItemView({ci}:{ci:ICartItem}) {
             // через нього вплине на кошик. АЛЕ зміна цього об'єкту не 
             // відстежується React, для реакції необхідна зміна стану.
 
-            setCart([...cart]);
+            setCart({...cart});
             // setCart(cart) - не буде працювати, оскільки React
             // відстежує зміни за посиланням, а зміни у вмісті масиву
             // не змінюють сам масив. Для ефекту необхідно створити 
-            // новий масив з копією даного [...cart]
+            // новий масив/об'єкт з копією даного [...cart]/{...cart}
         }
         else {
             if(confirm("Delete?")) {
@@ -52,18 +52,19 @@ function CartItemView({ci}:{ci:ICartItem}) {
     <div className='col col-2'>
         <img src={ci.product.imageUrl} className='w-100' alt={ci.product.name} />
     </div>
-    <div className='col col-5'>{ci.product.name}</div>
-    <div className='col col-1'>{ci.product.price}</div>
-    <div className='col col-3'>
+    <div className='col col-5 col-sm-3'>{ci.product.name}</div>
+    <div className='col col-1 col-sm-2 text-center'>{ci.product.price}</div>
+    <div className='col col-3 text-center'>
         <Counter 
             initialQuantity={ci.quantity}
             onChange={onQuantityChange} />                    
     </div>
-    <div className='col col-1'>{ci.product.price * ci.quantity}</div>
+    <div className='col col-1 col-sm-2 text-center'>{ci.price}</div>
 </div>;
 }
 /*
 Д.З. На сторінці товарної групи замінити заголовок
 зі слагу на реальну назву групи та додати підказку
 з її описом
+
 */
