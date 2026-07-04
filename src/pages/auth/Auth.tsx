@@ -9,7 +9,7 @@ export default function Auth() {
             <h2 className='auth-header'>
                 {pageMode == "signIn" ? "Форма входу" : "Реєстрація"}
             </h2>
-            <div className='d-flex justify-content-between mx-2 gap-2'>
+            <div className='d-flex justify-content-between mx-3 gap-3'>
                 <button className={`flex-1 btn ${pageMode == "signIn" ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setPageMode("signIn")}>Вхід</button>
                 <button className={`flex-1 btn ${pageMode == "signUp" ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setPageMode("signUp")}>Реєстрація</button>
             </div>
@@ -30,10 +30,23 @@ function SignIn() {
         );
     }, [login, password]);
 
-    return <div className='auth-form-content'>
-        <input type='text' placeholder='Логін' value={login} onChange={e => setLogin(e.target.value)} />
-        <input type='password' placeholder='********' value={password} onChange={e => setPassword(e.target.value)} />
-        <button className='btn btn-secondary'>Вхід</button>
+    return <div className='auth-form-content mx-3 my-4'>
+        <div className="input-group mb-3">
+            <span className="input-group-text" id="login-addon"><i className="bi bi-lock"></i></span>
+            <input className="form-control"
+                type='text' placeholder='Логін' 
+                value={login} onChange={e => setLogin(e.target.value)}
+                aria-label="Username" aria-describedby="login-addon" />
+        </div>
+        <div className="input-group mb-3">
+            <span className="input-group-text" id="password-addon"><i className="bi bi-key"></i></span>
+            <input className="form-control"
+                type='password' placeholder='********'
+                value={password} onChange={e => setPassword(e.target.value)}
+                aria-label="Password" aria-describedby="password-addon" />
+        </div>
+        
+        <button className={`btn ${isFormValid ? 'btn-primary' : 'btn-secondary'}`}>Вхід</button>
     </div>;
 }
 
@@ -55,4 +68,9 @@ function SignUp() {
  шляхом передачі необхідних даних
 
 Забув пароль - задача відновлення паролю
+
+Д.З. Додати режим "Забув пароль" до форми сторінки Auth
+Реалізувати два поля введення: пошта та дата (народження)
+Забезпечити блокування кнопки форми до введення усіх даних
+
 */
