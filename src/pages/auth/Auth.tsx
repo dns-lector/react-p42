@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ui/Auth.css';
 
 export default function Auth() {
@@ -10,8 +10,8 @@ export default function Auth() {
                 {pageMode == "signIn" ? "Форма входу" : "Реєстрація"}
             </h2>
             <div className='d-flex justify-content-between mx-2 gap-2'>
-                <button className='flex-1 btn btn-primary' onClick={() => setPageMode("signIn")}>Вхід</button>
-                <button className='flex-1 btn btn-secondary' onClick={() => setPageMode("signUp")}>Реєстрація</button>
+                <button className={`flex-1 btn ${pageMode == "signIn" ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setPageMode("signIn")}>Вхід</button>
+                <button className={`flex-1 btn ${pageMode == "signUp" ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setPageMode("signUp")}>Реєстрація</button>
             </div>
             {pageMode == "signIn" ? <SignIn /> : <SignUp />}
         </div>
@@ -19,7 +19,22 @@ export default function Auth() {
 }
 
 function SignIn() {
-    return <>SignIn</>;
+    const [login, setLogin] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [isFormValid, setFormValid] = useState<boolean>(false);
+
+    useEffect(() => {
+        setFormValid(
+            login.length > 2 &&   // Валідація 
+            password.length > 2   // форми
+        );
+    }, [login, password]);
+
+    return <div className='auth-form-content'>
+        <input type='text' placeholder='Логін' value={login} onChange={e => setLogin(e.target.value)} />
+        <input type='password' placeholder='********' value={password} onChange={e => setPassword(e.target.value)} />
+        <button className='btn btn-secondary'>Вхід</button>
+    </div>;
 }
 
 function SignUp() {

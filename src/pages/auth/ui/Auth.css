@@ -19,3 +19,7 @@
     text-align: center;
     margin: 10px 0;
 }
+.auth-form-content {
+    display: flex;
+    flex-direction: column;
+}
