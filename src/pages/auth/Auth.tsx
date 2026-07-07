@@ -31,6 +31,10 @@ function SignIn() {
         );
     }, [login, password]);
 
+    const signInClick = () => {
+
+    };
+
     return <div className='auth-form-content mx-3 my-4'>
         <div className="input-group mb-3">
             <span className="input-group-text" id="login-addon"><i className="bi bi-lock"></i></span>
@@ -47,7 +51,11 @@ function SignIn() {
                 aria-label="Password" aria-describedby="password-addon" />
         </div>
         
-        <button className={`btn ${isFormValid ? 'btn-primary' : 'btn-secondary'}`}>Вхід</button>
+        <button 
+            className={`btn ${isFormValid ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={isFormValid ? signInClick : undefined}>
+                Вхід
+        </button>
     </div>;
 }
 
