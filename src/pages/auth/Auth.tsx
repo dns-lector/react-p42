@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './ui/Auth.css';
+import SignUp from './ui/sign_up/SignUp';
 
 export default function Auth() {
     const [pageMode, setPageMode] = useState<string>("signIn");
@@ -48,10 +49,6 @@ function SignIn() {
         
         <button className={`btn ${isFormValid ? 'btn-primary' : 'btn-secondary'}`}>Вхід</button>
     </div>;
-}
-
-function SignUp() {
-    return <>SignUp</>;
 }
 
 /*
