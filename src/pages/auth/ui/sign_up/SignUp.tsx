@@ -17,22 +17,36 @@ const initialFormData:IFormData = {
     isAgree: false,
 };
 
+function isEmailValid(email:string):boolean {
+    return /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
+}
+
+const emailFeedback = "Адреса е-пошти повинна містити символи '@' та '.'";
+
 export default function SignUp() {
     const [formData, setFormData] = useState<IFormData>(initialFormData);
 
+    const valids = {
+        email: isEmailValid(formData.email),
+    };
+
     const isFormValid:boolean = formData.login.length > 2 &&
         formData.password.length > 2 &&
-        formData.email.length > 5 && 
+        valids.email && 
         formData.password == formData.repeat &&
         formData.isAgree;
 
+
     return <div className='reg-form-content mx-3 my-4'>
     <div className="input-group mb-3">
-        <span className="input-group-text" id="email-addon"><i className="bi bi-lock"></i></span>
-        <input className="form-control"
+        <span className="input-group-text" id="email-addon"><i className="bi bi-envelope-at"></i></span>
+        <input className={"form-control " + (formData.email.length == 0 ? "" : valids.email ? "is-valid" : "is-invalid")}
             type='email' placeholder='E-mail' 
             value={formData.email} onChange={e => setFormData({...formData, email:e.target.value})}
             aria-label="User E-mail" aria-describedby="email-addon" />
+        <div className="invalid-feedback">
+            {emailFeedback}
+        </div>
     </div>
     <div className="input-group mb-3">
         <span className="input-group-text" id="login-addon"><i className="bi bi-lock"></i></span>
@@ -55,7 +69,15 @@ export default function SignUp() {
             value={formData.repeat} onChange={e => setFormData({...formData, repeat:e.target.value})}
             aria-label="Repeat Password" aria-describedby="repeat-addon" />
     </div>
-    
+    <div className="input-group mb-3">
+        <div className="input-group-text">
+            <input className="form-check-input mt-0" type="checkbox" 
+                onChange={e => setFormData({...formData, isAgree:e.target.checked})}
+                aria-label="Погодження з правилами сайту"/>
+        </div>
+        <input type="text" className="form-control" aria-label="Погодження з правилами сайту"
+            value="Я погоджуюсь з правилами сайту" readOnly />
+    </div>
     <button className={`btn ${isFormValid ? 'btn-primary' : 'btn-secondary'}`}>Реєстрація</button>
 </div>;
 }
