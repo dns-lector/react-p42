@@ -1,3 +1,4 @@
+import Base64 from "../../../shared/base64/Base64";
 import type IUser from "../model/IUser";
 
 export default class UserApi {
@@ -9,8 +10,19 @@ export default class UserApi {
             setTimeout(() => {
                 // fetch -> JWT
                 if(login == "user" && password == "123") {
+                    // імітуємо одержання токена
                     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzgzNDQwMDE5NTcxLCJleHAiOjE3ODQ2NDk2NjIwMDAsIm5hbWUiOiJFeHBlcmluY2VkIFVzZXIiLCJlbWFpbCI6InVzZXJAaS51YSJ9.gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI";
-
+                    // обробляємо по справжньому
+                    // для фронтенда цікавий тільки payload: розділяємо токен за символом "." і беремо другу частину
+                    const payload = jwt.split('.')[1];
+                    const jsonString = Base64.decodeUrl(payload);
+                    const jsonObject = JSON.parse(jsonString);
+                    resolve({
+                        token: jwt,
+                        email: jsonObject.email,
+                        name: jsonObject.name,
+                        login: jsonObject.sub,
+                    });
                 }
                 else {
                     reject(401);
@@ -46,4 +58,6 @@ payload = {
 eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzgzNDQwMDE5NTcxLCJleHAiOjE3ODQ2NDk2NjIwMDAsIm5hbWUiOiJFeHBlcmluY2VkIFVzZXIiLCJlbWFpbCI6InVzZXJAaS51YSJ9
 
 signature = gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI
+
+
 */

@@ -11,9 +11,11 @@ import Cart from "../../pages/cart/Cart";
 import type ICart from "../../entities/cart/model/ICart";
 import CartApi from "../../entities/cart/api/CartApi";
 import Auth from '../../pages/auth/Auth';
+import type IUser from '../../entities/user/model/IUser';
 
 export default function App() {
     const [cart, setCart] = useState<ICart>({cartItems: [], price: 0});
+    const [user, setUser] = useState<IUser|undefined>();
 
     const updateCart = (cart:ICart):void => {
         // перед зміною стану здійснюємо запит на обчислення знижок по кошику
@@ -22,7 +24,7 @@ export default function App() {
     }
 
     return (
-    <AppContext.Provider value={{cart, setCart: updateCart}}>
+    <AppContext.Provider value={{cart, setCart: updateCart, user, setUser}}>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout />} >

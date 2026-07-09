@@ -1,20 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './ui/Auth.css';
 import SignUp from './ui/sign_up/SignUp';
+import UserApi from '../../entities/user/api/UserApi';
+import AppContext from '../../features/_context/AppContext';
+
+const PageModes = {
+    signIn: 'signIn',
+    signUp: 'signUp',
+    profile: 'profile',
+    forgotPassword: 'forgotPassword',
+} as const;
+
+type PageModes = (typeof PageModes)[keyof typeof PageModes];
+
 
 export default function Auth() {
-    const [pageMode, setPageMode] = useState<string>("signIn");
+    const {user} = useContext(AppContext);
+
+    const [pageMode, setPageMode] = useState<PageModes>(user ? PageModes.profile : PageModes.signIn);
 
     return <div className='auth-container'>
         <div className='auth-form'>
             <h2 className='auth-header'>
-                {pageMode == "signIn" ? "Форма входу" : "Реєстрація"}
+                {pageMode == PageModes.signIn ? "Форма входу" : "Реєстрація"}
             </h2>
             <div className='d-flex justify-content-between mx-3 gap-3'>
-                <button className={`flex-1 btn ${pageMode == "signIn" ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setPageMode("signIn")}>Вхід</button>
-                <button className={`flex-1 btn ${pageMode == "signUp" ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setPageMode("signUp")}>Реєстрація</button>
+                <button className={`flex-1 btn ${pageMode == PageModes.signIn ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setPageMode("signIn")}>Вхід</button>
+                <button className={`flex-1 btn ${pageMode == PageModes.signUp ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setPageMode("signUp")}>Реєстрація</button>
             </div>
-            {pageMode == "signIn" ? <SignIn /> : <SignUp />}
+            {pageMode == PageModes.signIn ? <SignIn /> : <SignUp />}
         </div>
     </div>;
 }
@@ -23,6 +37,7 @@ function SignIn() {
     const [login, setLogin] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [isFormValid, setFormValid] = useState<boolean>(false);
+    const {setUser} = useContext(AppContext);
 
     useEffect(() => {
         setFormValid(
@@ -32,7 +47,13 @@ function SignIn() {
     }, [login, password]);
 
     const signInClick = () => {
-
+        UserApi.authenticate(login, password)
+        .then(setUser)
+        .catch(err => {
+            if(err === 401) {
+                alert("У вході відмовлено. Перевірьте введені дані")
+            }
+        });
     };
 
     return <div className='auth-form-content mx-3 my-4'>
