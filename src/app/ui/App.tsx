@@ -1,5 +1,5 @@
 import '../../shared/extensions/NumberExtensions';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Layout from '../../pages/_layout/Layout';
@@ -12,6 +12,7 @@ import type ICart from "../../entities/cart/model/ICart";
 import CartApi from "../../entities/cart/api/CartApi";
 import Auth from '../../pages/auth/Auth';
 import type IUser from '../../entities/user/model/IUser';
+import { getRememberedUser, } from '../../entities/user/lib/UserLib';
 
 export default function App() {
     const [cart, setCart] = useState<ICart>({cartItems: [], price: 0});
@@ -22,6 +23,12 @@ export default function App() {
         CartApi.calculateCart(cart)
         .then(setCart);
     }
+
+    useEffect(() => {
+        // дії при (пере)запуску, у т.ч. оновленні сторінки
+        // перевіряємо чи є в локальному сховищі дані про користувача (токен)
+        setUser( getRememberedUser() );
+    }, []);
 
     return (
     <AppContext.Provider value={{cart, setCart: updateCart, user, setUser}}>

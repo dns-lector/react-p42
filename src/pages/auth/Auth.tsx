@@ -3,6 +3,8 @@ import './ui/Auth.css';
 import SignUp from './ui/sign_up/SignUp';
 import UserApi from '../../entities/user/api/UserApi';
 import AppContext from '../../features/_context/AppContext';
+import Profile from './ui/profile/Profile';
+import { rememberUser } from '../../entities/user/lib/UserLib';
 
 const PageModes = {
     signIn: 'signIn',
@@ -19,7 +21,7 @@ export default function Auth() {
 
     const [pageMode, setPageMode] = useState<PageModes>(user ? PageModes.profile : PageModes.signIn);
 
-    return <div className='auth-container'>
+    return user ? <Profile /> : <div className='auth-container'>
         <div className='auth-form'>
             <h2 className='auth-header'>
                 {pageMode == PageModes.signIn ? "Форма входу" : "Реєстрація"}
@@ -48,7 +50,12 @@ function SignIn() {
 
     const signInClick = () => {
         UserApi.authenticate(login, password)
-        .then(setUser)
+        .then(u => {
+            // if(rememberMe)
+            // забезпечуємо збереження даних користувача у постійному сховищі браузера
+            rememberUser(u);
+            setUser(u);
+        })
         .catch(err => {
             if(err === 401) {
                 alert("У вході відмовлено. Перевірьте введені дані")
