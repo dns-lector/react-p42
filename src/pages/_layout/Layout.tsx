@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import './ui/Layout.css';
 import AppContext from '../../features/_context/AppContext';
@@ -12,6 +12,10 @@ export default function Layout() {
         clearRememberedUser();
         setUser(undefined);
     }
+
+    useEffect(() => {
+        document.body.style.overflow = isLoading ? "hidden" : "auto";
+    }, [isLoading]);
 
     return <>    
     <nav className="navbar navbar-expand-sm bg-body-tertiary border-bottom">
@@ -55,7 +59,7 @@ export default function Layout() {
 
     <main>
         <Outlet />
-        {isLoading && <div className='preloader'></div>}
+        {isLoading && <div className='preloader'><img src="/img/loading.gif" alt="loading" /></div>}
     </main>    
     
     <footer className='border-top bg-body-tertiary'>
