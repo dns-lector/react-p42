@@ -6,7 +6,7 @@ import { clearRememberedUser } from '../../entities/user/lib/UserLib';
 
 export default function Layout() {
     // вилучаємо дані з контексту застосунку (глобального стану)
-    const {cart, user, setUser} = useContext(AppContext);
+    const {cart, user, setUser, isLoading} = useContext(AppContext);
 
     const logoutClick = () => {
         clearRememberedUser();
@@ -55,6 +55,7 @@ export default function Layout() {
 
     <main>
         <Outlet />
+        {isLoading && <div className='preloader'></div>}
     </main>    
     
     <footer className='border-top bg-body-tertiary'>

@@ -140,7 +140,7 @@ export default class GroupApi {
         return new Promise<Array<IGroup>>( (resolve, reject) => {
             setTimeout(
                 () => resolve(groups),
-                500
+                1500
             )
         } );
     }
