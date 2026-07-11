@@ -162,7 +162,7 @@ export default class GroupApi {
                         reject("Not Found");
                     }
                 },
-                500
+                1000
             )
         } );
     }
