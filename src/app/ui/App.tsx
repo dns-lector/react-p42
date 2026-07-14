@@ -7,12 +7,15 @@ import CartApi from "../../entities/cart/api/CartApi";
 import type IUser from '../../entities/user/model/IUser';
 import { getRememberedUser, } from '../../entities/user/lib/UserLib';
 import Router from './Router';
+import Alert from '../../features/alert/Alert';
+import type IAlertData from '../../features/alert/model/IAlertData';
 
 export default function App() {
     const [cart, setCart] = useState<ICart>({cartItems: [], price: 0});
     const [user, setUser] = useState<IUser|undefined>();
     const [isLoading, setLoading] = useState<boolean>(false);
-
+    const [alertData, setAlertData] = useState<IAlertData|null>(null);
+    
     const updateCart = (cart:ICart):void => {
         // перед зміною стану здійснюємо запит на обчислення знижок по кошику
         CartApi.calculateCart(cart)
@@ -26,8 +29,14 @@ export default function App() {
     }, []);
 
     return (
-    <AppContext.Provider value={{cart, setCart: updateCart, user, setUser, isLoading, setLoading,}}>
+    <AppContext.Provider value={{
+            cart, setCart: updateCart, 
+            user, setUser, 
+            isLoading, setLoading,
+            showAlert: setAlertData
+        }}>
         <Router />
+        {alertData && <Alert data={alertData} />}
     </AppContext.Provider>
     );
 }

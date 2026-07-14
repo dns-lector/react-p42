@@ -6,7 +6,7 @@ import { clearRememberedUser } from '../../entities/user/lib/UserLib';
 
 export default function Layout() {
     // вилучаємо дані з контексту застосунку (глобального стану)
-    const {cart, user, setUser, isLoading} = useContext(AppContext);
+    const {cart, user, setUser, isLoading, showAlert} = useContext(AppContext);
 
     const logoutClick = () => {
         clearRememberedUser();
@@ -37,7 +37,12 @@ export default function Layout() {
                     </li>                
                     <li className="nav-item">
                         <Link to="/no-page" className="nav-link"><i className="bi bi-sign-stop"></i></Link>
-                    </li>                     
+                    </li>              
+                    <li className="nav-item">
+                        <span onClick={() => showAlert({message: "Hello"})} className="nav-link">
+                            <i className="bi bi-key"></i>
+                        </span>
+                    </li>                          
                 </ul>
                 <form className="d-flex" role="search">
                     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>

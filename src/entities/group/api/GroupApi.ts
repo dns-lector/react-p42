@@ -1,4 +1,4 @@
-import Request from "../../_request/Request";
+import ApiBase from "../../_api_base/ApiBase";
 import type IGroup from "../model/IGroup";
 import type IGroupProduct from "../model/IGroupProduct";
 
@@ -138,39 +138,19 @@ const groupProducts:Record<string,IGroupProduct> = {
 export default class GroupApi {
 
     static allGroups(): Promise<Array<IGroup>> {
-        // return new Promise<Array<IGroup>>( (resolve, reject) => {
-        //     setTimeout(
-        //         () => resolve(groups),
-        //         1500
-        //     )
-        // } );
-        return Request.getCached("/groups", null, groups) as Promise<Array<IGroup>>;
+        return ApiBase.getCached("/groups", null, groups) as Promise<Array<IGroup>>;
     }
 
     static groupDetails(slug:string): Promise<IGroupProduct> {
-        return Request.getCached(
+        return ApiBase.getCached(
             `/groups/${slug}`, 
-            null, 
-            groups.find(g => g.slug == slug)) as Promise<IGroupProduct>;
-        // return new Promise<IGroupProduct>( (resolve, reject) => {
-        //     setTimeout(
-        //         () => {
-        //             let group = groups.find(g => g.slug == slug);
-        //             if(group) {
-        //                 resolve({
-        //                     group,
-        //                     products: typeof groupProducts[slug] == 'undefined'
-        //                     ? [] 
-        //                     : groupProducts[slug].products,
-        //                 });
-        //             }
-        //             else {
-        //                 reject("Not Found");
-        //             }
-        //         },
-        //         1000
-        //     )
-        // } );
+            null, {
+                group: groups.find(g => g.slug == slug),
+                products: typeof groupProducts[slug] == 'undefined'
+                ? [] 
+                : groupProducts[slug].products,
+            }            
+        ) as Promise<IGroupProduct>;
     }
 
 }

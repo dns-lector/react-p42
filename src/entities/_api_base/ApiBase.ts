@@ -8,7 +8,7 @@ interface ICacheItem {
 
 const cache:Record<string, ICacheItem> = { };
 
-export default class Request {
+export default class ApiBase {
     static getCached(url:string, conf?:object, fallback?:object):Promise<object> {
         return new Promise((resolve, reject) => {
             // url - адреса запиту (з усіма параметрами)
