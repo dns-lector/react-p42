@@ -9,7 +9,11 @@ export default function Alert({data}:{data:IAlertData}) {
     return <div className='alert-bg'>
         <div className='alert-fg'>
             {data.message}
-            <button onClick={() => showAlert(null)}>Close</button>
+            {data.buttons && data.buttons.length > 0
+            ? data.buttons.map(btn => <button key={btn.title} onClick={btn.action}>{btn.title}</button>)
+            : <button onClick={() => showAlert(null)}>Close</button>
+            }
+            
         </div>
     </div>;
 }
