@@ -46,7 +46,8 @@ export default function Layout() {
                     <li className="nav-item">
                         <span onClick={() => showAlert({
                             message: "Hello",
-                            buttons: [{title: "Ok"}]
+                            buttons: [{title: "Ok"}],
+                            isCancelable: true,
                         })} className="nav-link">
                             <i className="bi bi-key"></i>
                         </span>

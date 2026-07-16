@@ -36,7 +36,7 @@ export default function Cart() {
 }
 
 function CartItemView({ci}:{ci:ICartItem}) {
-    const {cart, setCart} = useContext(AppContext);
+    const {cart, setCart, showAlert} = useContext(AppContext);
 
     const onQuantityChange = (quantity:number) => {
         if(quantity > 0) {
@@ -53,13 +53,22 @@ function CartItemView({ci}:{ci:ICartItem}) {
             // новий масив/об'єкт з копією даного [...cart]/{...cart}
         }
         else {
-            if(confirm("Delete?")) {
-                /*
-                    Д.З. Реалізувати видалення позиції з кошику
-                    при зменшенні його кількості до 0
-                    з попереднім запитом до користувача про підтвердження дії
-                */
-            }
+            // if(confirm("Delete?")) {
+            //     /*
+            //         Д.З. Реалізувати видалення позиції з кошику
+            //         при зменшенні його кількості до 0
+            //         з попереднім запитом до користувача про підтвердження дії
+            //     */
+            // }
+            showAlert({
+                title: "Підтвердження дії",
+                message: "Видалити з кошику товар " + ci.product.name + "?",
+                isCancelable: true,
+                buttons: [
+                    {title: "Так", action: () => {/* видалення позиції з кошику */}},
+                    {title: "Hi"}
+                ]
+            });
         }
     }
     const fullPrice = ci.product.price * ci.quantity;
