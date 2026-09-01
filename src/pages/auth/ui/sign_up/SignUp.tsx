@@ -1,17 +1,13 @@
 import { useState } from 'react';
 import './SignUp.css';
+import type IUserSignupData from '../../../../entities/user/model/IUserSignupData';
+import UserApi from '../../../../entities/user/api/UserApi';
 
-interface IFormData {
-    login: string,
-    email: string,
-    password: string,
-    repeat: string,
-    isAgree: boolean,
-};
-
-const initialFormData:IFormData = {
+const initialFormData:IUserSignupData = {
+    name: "",
     login: "",
     email: "",
+    phone: "",
     password: "",
     repeat: "",
     isAgree: false,
@@ -24,7 +20,7 @@ function isEmailValid(email:string):boolean {
 const emailFeedback = "Адреса е-пошти повинна містити символи '@' та '.'";
 
 export default function SignUp() {
-    const [formData, setFormData] = useState<IFormData>(initialFormData);
+    const [formData, setFormData] = useState<IUserSignupData>(initialFormData);
 
     const valids = {
         email: isEmailValid(formData.email),
@@ -32,12 +28,26 @@ export default function SignUp() {
 
     const isFormValid:boolean = formData.login.length > 2 &&
         formData.password.length > 2 &&
+        formData.name.length > 2 &&
+        formData.phone.length > 7 &&
         valids.email && 
         formData.password == formData.repeat &&
         formData.isAgree;
 
+    const signUpClick = () => {
+        UserApi.signUp(formData)
+        .then(() => {console.log("Sign Up OK")})
+        .catch(() => {console.log("Sign Up Fail")});
+    }
 
     return <div className='reg-form-content mx-3 my-4'>
+    <div className="input-group mb-3">
+        <span className="input-group-text" id="name-addon"><i className="bi bi-person-badge"></i></span>
+        <input className="form-control"
+            type='text' placeholder="Ім'я"
+            value={formData.name} onChange={e => setFormData({...formData, name:e.target.value})}
+            aria-label="Username" aria-describedby="name-addon" />
+    </div>
     <div className="input-group mb-3">
         <span className="input-group-text" id="email-addon"><i className="bi bi-envelope-at"></i></span>
         <input className={"form-control " + (formData.email.length == 0 ? "" : valids.email ? "is-valid" : "is-invalid")}
@@ -47,6 +57,13 @@ export default function SignUp() {
         <div className="invalid-feedback">
             {emailFeedback}
         </div>
+    </div>
+    <div className="input-group mb-3">
+        <span className="input-group-text" id="phone-addon"><i className="bi bi-telephone"></i></span>
+        <input className="form-control"
+            type='text' placeholder='0987654321' 
+            value={formData.phone} onChange={e => setFormData({...formData, phone:e.target.value})}
+            aria-label="Username" aria-describedby="phone-addon" />
     </div>
     <div className="input-group mb-3">
         <span className="input-group-text" id="login-addon"><i className="bi bi-lock"></i></span>
@@ -78,6 +95,9 @@ export default function SignUp() {
         <input type="text" className="form-control" aria-label="Погодження з правилами сайту"
             value="Я погоджуюсь з правилами сайту" readOnly />
     </div>
-    <button className={`btn ${isFormValid ? 'btn-primary' : 'btn-secondary'}`}>Реєстрація</button>
+    <button 
+        className={`btn ${isFormValid ? 'btn-primary' : 'btn-secondary'}`}
+        onClick={isFormValid ? signUpClick : undefined}
+    >Реєстрація</button>
 </div>;
 }

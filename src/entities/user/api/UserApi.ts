@@ -1,8 +1,27 @@
 import Base64 from "../../../shared/base64/Base64";
 import { getUserFromJwt } from "../lib/UserLib";
 import type IUser from "../model/IUser";
+import type IUserSignupData from "../model/IUserSignupData";
 
 export default class UserApi {
+
+    static signUp(data:IUserSignupData):Promise<void> {
+        return new Promise((resolve, reject) => {
+            fetch("https://localhost:7149/User/SignUp", {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),    
+            }).then(r => {
+                if(r.ok) {
+                    resolve();
+                }
+                else {
+                    reject();
+                }
+            })
+        });
+    }
 
     static authenticate(login:string, password:string):Promise<IUser> {
         return new Promise<IUser>((resolve, reject) => {
