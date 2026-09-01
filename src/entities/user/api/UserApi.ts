@@ -1,9 +1,27 @@
+import Base64 from "../../../shared/base64/Base64";
 import { getUserFromJwt } from "../lib/UserLib";
 import type IUser from "../model/IUser";
 
 export default class UserApi {
 
     static authenticate(login:string, password:string):Promise<IUser> {
+        return new Promise<IUser>((resolve, reject) => {
+            fetch("https://localhost:7149/User/BasicAuthJwt", {
+                headers: {
+                    "Authorization": "Basic " + Base64.encode(login + ':' + password)
+                }            
+            }).then(async r => {
+                if(r.ok) {
+                    resolve( getUserFromJwt( await r.text() ) );
+                }
+                else {
+                    reject( await r.text() );
+                }
+            })
+        });
+    }
+
+    static authenticateMock(login:string, password:string):Promise<IUser> {
         return new Promise<IUser>((resolve, reject) => {
             // одним з правил автентифікації є навмисно закладений відчутний час
             // самої процедури (близько 1с) з безпекових міркувань
