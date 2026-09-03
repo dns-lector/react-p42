@@ -8,6 +8,7 @@ export default class UserApi {
     static signUp(data:IUserSignupData):Promise<void> {
         return new Promise((resolve, reject) => {
             fetch("https://localhost:7149/User/SignUp", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
