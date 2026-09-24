@@ -1,4 +1,5 @@
 import ApiBase from "../../_api_base/ApiBase";
+import type IRestResponse from "../../_api_base/model/IRestResponse";
 import type IGroup from "../model/IGroup";
 import type IGroupProduct from "../model/IGroupProduct";
 
@@ -137,14 +138,14 @@ const groupProducts:Record<string,IGroupProduct> = {
 
 export default class GroupApi {
 
-    static allGroups(): Promise<Array<IGroup>> {
-        return ApiBase.getCached("/groups", null, groups) as Promise<Array<IGroup>>;
+    static allGroups(): Promise<IRestResponse> {
+        return ApiBase.getCached("/group?pageSize=3", undefined, groups) as Promise<IRestResponse>;
     }
 
     static groupDetails(slug:string): Promise<IGroupProduct> {
         return ApiBase.getCached(
-            `/groups/${slug}`, 
-            null, {
+            `/group/${slug}`, 
+            undefined, {
                 group: groups.find(g => g.slug == slug),
                 products: typeof groupProducts[slug] == 'undefined'
                 ? [] 
@@ -155,8 +156,10 @@ export default class GroupApi {
 
 }
 /*
-Д.З. Створити сторінку "Політика конфіденційності (Privacy)"
-Наповнити її стандартною інформацією (дозволяється ШІ)
-Розмістити посилання на неї в шаблоні сторінок для доступності
-з усіх сторінок сайту
+Д.З. Покращити відображення пагінатора сторінки груп (домашньої):
+поточна сторінка відображається вибраною (class="page-item active")
+якщо поточна сторінка є першою, то кнопка назад "<<" є неактивною (class="page-item disabled")
+якщо поточна сторінка є останньою, то кнопка вперед ">>" є неактивною
+** якщо кількість сторінок більша за 3, то показувати поточну та сусідні
+<< 5 [6] 7 >>
 */

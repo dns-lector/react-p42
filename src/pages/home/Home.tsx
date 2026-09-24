@@ -3,6 +3,7 @@ import type IGroup from "../../entities/group/model/IGroup";
 import GroupApi from "../../entities/group/api/GroupApi";
 import { Link } from "react-router-dom";
 import AppContext from "../../features/_context/AppContext";
+import type IPagination from "../../entities/_api_base/model/IPagination";
 
 const preload_grp:Array<IGroup> = Array.from({length: 10}, (_, i) => {
     return {
@@ -17,11 +18,15 @@ const preload_grp:Array<IGroup> = Array.from({length: 10}, (_, i) => {
 export default function Home() {
     const [groups, setGroups] = useState<Array<IGroup>>(preload_grp);
     const {setLoading} = useContext(AppContext);
+    const [pagination, setPagination] = useState<IPagination|undefined>();
 
     useEffect(() => {
         setLoading(true);
         GroupApi.allGroups()
-        .then(setGroups)   // .then(grp => setGroups(grp))
+        .then(grp => {
+            setGroups(grp.data);
+            setPagination(grp.meta.pagination);
+        })
         .finally(() => {setLoading(false);});
 
         // хук може повертати дію (лямбду). 
@@ -45,7 +50,24 @@ export default function Home() {
                 </div>
             </div>)}
         </div>
-        
-        
+        {pagination &&
+            <nav className="my-4" aria-label="Page navigation example">
+                <ul className="pagination">
+                    <li className="page-item">
+                        <a className="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {Array.from({length: pagination.totalPages}, (_, i) => 
+                        <li className="page-item"><a className="page-link" href="#">{i+1}</a></li>
+                    )}
+                    <li className="page-item">
+                        <a className="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
     </div>;
 }

@@ -33,10 +33,10 @@ export default class ApiBase {
             .then(j => {
                 // зберігаємо одержані дані до кешу
                 cache[url] = {
-                    responseBody: j.data,
+                    responseBody: j,
                     expires: new Date().getTime() + 100000
                 };
-                resolve(j.data);   // REST - дані ідуть у полі .data
+                resolve(j); 
             })
             .catch(reject);  // TODO: get fallback
         });
