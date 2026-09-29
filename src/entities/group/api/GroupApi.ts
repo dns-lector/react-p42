@@ -138,8 +138,8 @@ const groupProducts:Record<string,IGroupProduct> = {
 
 export default class GroupApi {
 
-    static allGroups(): Promise<IRestResponse> {
-        return ApiBase.getCached("/group?pageSize=3", undefined, groups) as Promise<IRestResponse>;
+    static allGroups(page:number=1, pageSize:number=3): Promise<IRestResponse> {
+        return ApiBase.getCached(`/group?pageSize=${pageSize}&page=${page}`, undefined, groups) as Promise<IRestResponse>;
     }
 
     static groupDetails(slug:string): Promise<IGroupProduct> {

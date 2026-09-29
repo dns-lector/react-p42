@@ -4,4 +4,5 @@ export default interface IGroup {
     description: string,
     slug: string,
     imageUrl: string,
+    children?: IGroup[],
 };
