@@ -18,7 +18,7 @@ const preload_grp:Array<IGroup> = Array.from({length: 3}, (_, i) => {
 
 export default function Home() {
     const [groups, setGroups] = useState<Array<IGroup>>(preload_grp);
-    const {setLoading} = useContext(AppContext);
+    const {setLoading, locale} = useContext(AppContext);
     const [pagination, setPagination] = useState<IPagination|undefined>();
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -38,7 +38,7 @@ export default function Home() {
 
 
     return <div className="container">
-        <h1>Крамниця</h1>
+        <h1>{locale.homePageTitle}</h1>
 
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 g-4 g-xl-5">
             {groups.map(g => <div className="col" key={g.id}>

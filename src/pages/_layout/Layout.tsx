@@ -3,10 +3,12 @@ import { Link, Outlet } from 'react-router-dom';
 import './ui/Layout.css';
 import AppContext from '../../features/_context/AppContext';
 import { clearRememberedUser } from '../../entities/user/lib/UserLib';
+import Locale_enUS from '../../shared/l10n/Locale_en-US';
+import Locale_ukUA from '../../shared/l10n/Locale_uk-UA';
 
 export default function Layout() {
     // вилучаємо дані з контексту застосунку (глобального стану)
-    const {cart, user, setUser, isLoading, showAlert} = useContext(AppContext);
+    const {cart, user, setUser, isLoading, showAlert, locale, switchLocale} = useContext(AppContext);
 
     const logoutClick = () => {
         clearRememberedUser();
@@ -88,7 +90,9 @@ export default function Layout() {
     </main>    
     
     <footer className='border-top bg-body-tertiary'>
-        &copy; IT STEP, 2026
+        &copy; {locale.layoutFooterCopyright}
+        <button onClick={() => switchLocale(Locale_enUS)}>en-US</button>
+        <button onClick={() => switchLocale(Locale_ukUA)}>uk-UA</button>
     </footer>
     </>;
 }

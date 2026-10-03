@@ -9,13 +9,15 @@ import { getRememberedUser, } from '../../entities/user/lib/UserLib';
 import Router from './Router';
 import Alert from '../../features/alert/Alert';
 import type IAlertData from '../../features/alert/model/IAlertData';
+import Locale_ukUA from '../../shared/l10n/Locale_uk-UA';
 
 export default function App() {
     const [cart, setCart] = useState<ICart>({cartItems: [], price: 0});
     const [user, setUser] = useState<IUser|undefined>();
     const [isLoading, setLoading] = useState<boolean>(false);
     const [alertData, setAlertData] = useState<IAlertData|null>(null);
-    
+    const [locale, setLocale] = useState(Locale_ukUA);
+
     const updateCart = (cart:ICart):void => {
         // перед зміною стану здійснюємо запит на обчислення знижок по кошику
         CartApi.calculateCart(cart)
@@ -33,7 +35,9 @@ export default function App() {
             cart, setCart: updateCart, 
             user, setUser, 
             isLoading, setLoading,
-            showAlert: setAlertData
+            showAlert: setAlertData,
+            locale: locale,
+            switchLocale: setLocale,
         }}>
         <Router />
         {alertData && <Alert data={alertData} />}

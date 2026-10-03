@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import type IAppContext from "./model/IAppContext";
+import Locale_ukUA from "../../shared/l10n/Locale_uk-UA";
 
 const AppContext = createContext<IAppContext>({
     cart: {
@@ -19,6 +20,10 @@ const AppContext = createContext<IAppContext>({
     },
     showAlert(_) {
         throw "showAlert: Not implemented";
+    },
+    locale: Locale_ukUA,
+    switchLocale(_) {
+        throw "switchLocale: Not implemented";
     },
 });
 

@@ -10,4 +10,6 @@ export default interface IAppContext {
     isLoading:boolean, 
     setLoading(isLoading:boolean):void,
     showAlert(alertData:IAlertData|null):void,
+    locale:Record<string,string>,
+    switchLocale(locale:Record<string,string>):void,
 }
